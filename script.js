@@ -29,9 +29,13 @@ function render() {
     const $checkbox = document.createElement('input')
     $checkbox.type = 'checkbox'
     $checkbox.classList.add('checkbox')
+    $checkbox.checked = v.done
+
     // 컨텐트
     const $p = document.createElement('p')
     const $content = document.createTextNode(v.content)
+    if(v.done) $p.classList.add('line')
+
     $p.appendChild($content)
     // 버튼
     const $buttons = document.createElement('div')
