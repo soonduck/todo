@@ -12,8 +12,15 @@ const todos = [
 //         </div>
 //     </li>
 
+const $input = document.querySelector('.write-todolist')
+const $button = document.querySelector('.btn-send')
+
+$button.addEventListener('click', add)
+$input.addEventListener('keyup', add)
+
 function render() {
   const $todoList = document.querySelector('.list-todos')
+  $todoList.innerHTML = ''
   todos.forEach((v,i,a) => {
     const $todo = document.createElement('li')
     $todo.classList.add('item-todo')
@@ -43,6 +50,17 @@ function render() {
     $todo.appendChild($buttons)
     $todoList.appendChild($todo)
   })
+}
+
+function add(e) {
+  if(e.keyCode && e.keyCode !== 13) return
+  if(!$input.value.trim().length) return
+  // press enter or click add button
+  const id = todos[todos.length-1].id + 1
+  const content = $input.value.trim()
+  const done = false
+  todos.push({id, content, done})
+  render()
 }
 
 render()
