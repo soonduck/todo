@@ -1,4 +1,4 @@
-const todos = [
+let todos = [
   {id: 0, content: '할일', done: false},
   {id: 1, content: '할일', done: true},
   {id: 2, content: '할일', done: false}
@@ -43,8 +43,11 @@ function render() {
     const $btnDelete = document.createElement('button')
     $btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i>'
     $btnDelete.innerHTML = '<i class="fa-regular fa-trash-can"></i>'
-    $btnEdit.classList.add('btn-edit')
-    $btnDelete.classList.add('btn-delete')
+    $btnEdit.classList.add('btn-edit', v.id)
+    $btnDelete.classList.add('btn-delete', v.id)
+    $btnDelete.addEventListener('click', erase)
+    $btnEdit.addEventListener('click', edit)
+
     $buttons.appendChild($btnEdit)
     $buttons.appendChild($btnDelete)
 
@@ -65,6 +68,16 @@ function add(e) {
   const done = false
   todos.push({id, content, done})
   render()
+}
+
+function erase(e) {
+  const eraseId = +e.currentTarget.classList[1]
+  todos = todos.filter(v => v.id !== eraseId)
+  render()
+}
+
+function edit(e) {
+  console.log()
 }
 
 render()
