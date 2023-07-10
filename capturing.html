@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<div>
+  div
+  <p>
+    p
+    <span>span</span>
+  </p>
+</div>
+
+<script>
+
+  for (const elem of document.querySelectorAll('*')) {
+    elem.addEventListener('click', e => console.log('캡처링 ' + elem.tagName), true)
+    elem.addEventListener('click', e => console.log('버블링 ' + elem.tagName))
+  }
+
+</script>
+</body>
+</html>
