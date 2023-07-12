@@ -23,7 +23,7 @@ function render() {
   $todoList.innerHTML = ''
   todos.forEach((v,i,a) => {
     const $todo = document.createElement('li')
-    $todo.classList.add('item-todo')
+    $todo.classList.add('item-todo-'+v.id)
 
     // 체크박스
     const $checkbox = document.createElement('input')
@@ -35,8 +35,13 @@ function render() {
     const $p = document.createElement('p')
     const $content = document.createTextNode(v.content)
     if(v.done) $p.classList.add('line')
-
     $p.appendChild($content)
+
+    // input
+    const $input = document.createElement('input')
+    $input.classList.add('input-edit-'+v.id)
+    $input.value = v.content
+
     // 버튼
     const $buttons = document.createElement('div')
     const $btnEdit = document.createElement('button')
@@ -53,6 +58,7 @@ function render() {
 
     // 투두 생성
     $todo.appendChild($checkbox)
+    $todo.appendChild($input)
     $todo.appendChild($p)
     $todo.appendChild($buttons)
     $todoList.appendChild($todo)
@@ -76,8 +82,24 @@ function erase(e) {
   render()
 }
 
-function edit(e) {
-  console.log()
+
+function edit(e){
+  const editId = +e.currentTarget.classList[1]
+  const $li = document.querySelector('.item-todo-'+editId)
+  $li.classList.toggle('edit')
+
+  if($li.classList[1]) return
+
+  const $input = document.querySelector('.input-edit-'+editId)
+  if(!$input.value.trim()) {
+    // 값이 없을때 처리
+    return
+  }
+
+  todos = todos.map(v => {
+    return v.id === editId ? {...v, content: $input.value.trim()} : v
+  })
+  render()
 }
 
 render()

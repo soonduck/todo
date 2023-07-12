@@ -148,7 +148,7 @@ button{
     margin-top: 40px;
 }
 
-.item-todo{
+li[class^=item-todo]{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -188,4 +188,8 @@ button{
 
 .line{
     text-decoration: line-through;
+}
+
+input[class^=input-edit]:not(.edit input), .edit p{
+    display: none;
 }
