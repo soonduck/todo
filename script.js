@@ -28,8 +28,9 @@ function render() {
     // 체크박스
     const $checkbox = document.createElement('input')
     $checkbox.type = 'checkbox'
-    $checkbox.classList.add('checkbox')
+    $checkbox.classList.add('checkbox', v.id)
     $checkbox.checked = v.done
+    $checkbox.addEventListener('click', checkTodo)
 
     // 컨텐트
     const $p = document.createElement('p')
@@ -93,6 +94,16 @@ function edit(e){
   const $input = document.querySelector('.input-edit-'+editId)
   if(!$input.value.trim()) {
     // 값이 없을때 처리
+    // render()
+    for (const todo of todos) {
+      if(todo.id === editId) {
+        $input.value = todo.content
+        break
+        // 숙제: 버튼 disabled 시키는 방법으로 다시 구현하기
+        // 힌트: edit 함수에서 수정하는게 아님
+        // 힌트2: input에 값이 입력될 때마다 value를 확인하고 버튼의 상태를 변경해줘야 함
+      }
+    }
     return
   }
 
@@ -100,6 +111,12 @@ function edit(e){
     return v.id === editId ? {...v, content: $input.value.trim()} : v
   })
   render()
+}
+
+function checkTodo(e) {
+  console.log(e.currentTarget.checked)
+  // 숙제2 : map 메소드 사용해서 todos의 done 상태 업데이트 하기
+  // 숙제3: content에 밑줄 그이게 하기
 }
 
 render()
