@@ -42,6 +42,7 @@ function render() {
     const $input = document.createElement('input')
     $input.classList.add('input-edit-'+v.id)
     $input.value = v.content
+    $input.addEventListener('input', checkEditInput)
 
     // 버튼
     const $buttons = document.createElement('div')
@@ -49,7 +50,7 @@ function render() {
     const $btnDelete = document.createElement('button')
     $btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i>'
     $btnDelete.innerHTML = '<i class="fa-regular fa-trash-can"></i>'
-    $btnEdit.classList.add('btn-edit', v.id)
+    $btnEdit.classList.add('btn-edit-'+v.id, v.id)
     $btnDelete.classList.add('btn-delete', v.id)
     $btnDelete.addEventListener('click', erase)
     $btnEdit.addEventListener('click', edit)
@@ -106,6 +107,13 @@ function edit(e){
     return v.id === editId ? {...v, content: $input.value.trim()} : v
   })
   render()
+}
+
+function checkEditInput(e){
+  const value = e.currentTarget.value
+  const classId = e.currentTarget.classList[0].slice(11)
+  const $btnEdit = document.querySelector('.btn-edit-'+classId)
+  $btnEdit.disabled = !value.trim();
 }
 
 function checkTodo(e) {
