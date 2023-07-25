@@ -92,20 +92,15 @@ function edit(e){
   if($li.classList[1]) return
 
   const $input = document.querySelector('.input-edit-'+editId)
-  if(!$input.value.trim()) {
-    // 값이 없을때 처리
-    // render()
-    for (const todo of todos) {
-      if(todo.id === editId) {
-        $input.value = todo.content
-        break
-        // 숙제: 버튼 disabled 시키는 방법으로 다시 구현하기
-        // 힌트: edit 함수에서 수정하는게 아님
-        // 힌트2: input에 값이 입력될 때마다 value를 확인하고 버튼의 상태를 변경해줘야 함
-      }
-    }
-    return
-  }
+  // if(!$input.value.trim()) {
+  //   for (const todo of todos) {
+  //     if(todo.id === editId) {
+  //       $input.value = todo.content
+  //       break
+  //     }
+  //   }
+  //   return
+  // }
 
   todos = todos.map(v => {
     return v.id === editId ? {...v, content: $input.value.trim()} : v
@@ -114,9 +109,12 @@ function edit(e){
 }
 
 function checkTodo(e) {
-  console.log(e.currentTarget.checked)
-  // 숙제2 : map 메소드 사용해서 todos의 done 상태 업데이트 하기
-  // 숙제3: content에 밑줄 그이게 하기
+  const $checkbox = e.currentTarget
+  const editId = +$checkbox.classList[1]
+  todos = todos.map((v) => {
+    if (v.id === editId) return {...v, done: $checkbox.checked}
+  })
+  render()
 }
 
 render()
